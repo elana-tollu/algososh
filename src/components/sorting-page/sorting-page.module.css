@@ -1,0 +1,32 @@
+.settings {
+    margin: 0 auto;
+    padding: 0;
+    width: 980px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 52px;
+}
+
+.buttons {
+    padding: 0;
+    width: 708px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.visual{
+    margin-top: 48px;
+    min-width: 66px;
+    height: 368px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0;
+    gap: 10px;
+}
