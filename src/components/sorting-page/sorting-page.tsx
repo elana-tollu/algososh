@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Direction } from "../../types/direction";
 import { ElementStates } from "../../types/element-states";
 import { Button } from "../ui/button/button";
-import { Column } from "../ui/column/column";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import { ArrayVisual, IArrayItem } from "./array-visual";
@@ -13,30 +12,38 @@ enum Algorithm {
   SelectionSort
 }
 
+enum SortOrder {
+  Asc,
+  Desc
+}
+
+function createSorter(items: number[], algorithm: Algorithm, sortOrder: SortOrder): ISorter {
+  const order: Order = sortOrder === SortOrder.Asc ? (a, b) => a > b : (a, b) => a < b;
+  return algorithm === Algorithm.SelectionSort ? new SelectionSorter(items, order) : new BubbleSorter(items, order);
+}
+
 export const SortingPage: React.FC = () => {
-  const [sorter, setSorter] = useState<ISorter>(new BubbleSorter(randomArr(), (a, b) => a > b));
-  const [items, setItems] = useState<IArrayItem[]>([]);
+  const [sorter, setSorter] = useState<ISorter|undefined>();
   const [run, setRun] = useState<boolean>(false);
-  const [arr, setArr] = useState<number[]>([]);
+  const [arr, setArr] = useState<number[]>(randomArr());
   const [algorithm, setAlgorithm] = useState<Algorithm>(Algorithm.SelectionSort);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
+  const [_, setTicks] = useState<number>(0);
 
   const handleNew: React.MouseEventHandler<HTMLButtonElement> = (clickEvent) => {
-    const newArray = randomArr();
-    const newItems = newArray.map(value => {
-      let state = ElementStates.Default;
-      return {value, state}
-    });
-    setItems(newItems);
-    setArr(newArray);
+    setArr(randomArr());
+    setSorter(undefined);
   }
 
   const handleAsc: React.MouseEventHandler<HTMLButtonElement> = (clickEvent) => {
-    setSorter(new BubbleSorter(arr, (a, b) => a > b));
+    setSortOrder(SortOrder.Asc);
+    setSorter(createSorter(arr, algorithm, SortOrder.Asc));
     setRun(true);
   }
 
   const handleDesc: React.MouseEventHandler<HTMLButtonElement> = (clickEvent) => {
-    setSorter(new BubbleSorter(arr, (a, b) => a < b));
+    setSortOrder(SortOrder.Desc);
+    setSorter(createSorter(arr, algorithm, SortOrder.Desc));
     setRun(true);
   }
 
@@ -49,14 +56,19 @@ export const SortingPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (run && !sorter.isDone()) {
+    if (run && sorter !== undefined && !sorter.isDone()) {
       setTimeout(() => {
-        sorter.next();
-        setItems(sorter.getResult());
+        sorter!.next();
+        setTicks(ticks => ticks + 1);
       }, 500); 
     } else {
       setRun(false);
     }
+  });
+
+  const items = sorter !== undefined ? sorter.getResult() : arr.map(value => {
+    let state = ElementStates.Default;
+    return {value, state}
   });
 
   return (
@@ -65,12 +77,12 @@ export const SortingPage: React.FC = () => {
         <div>
           <RadioInput 
             label={"Выбор"}
-            checked={algorithm == Algorithm.SelectionSort}
+            checked={algorithm === Algorithm.SelectionSort}
             onChange={selectSelectionSort}
           />
           <RadioInput 
             label={"Пузырёк"}
-            checked={algorithm == Algorithm.BubbleSort}
+            checked={algorithm === Algorithm.BubbleSort}
             onChange={selectBubbleSort}
           />
         </div>
@@ -80,20 +92,23 @@ export const SortingPage: React.FC = () => {
             sorting={Direction.Ascending}
             text={"По возрастанию"}
             linkedList='medium'
-            isLoader={run==true}
+            isLoader={run && sortOrder === SortOrder.Asc}
+            disabled={run}
           />
           <Button 
             onClick={handleDesc}
             sorting={Direction.Descending}
             text={"По убыванию"}
             linkedList='medium'
-            isLoader={run==true}
+            isLoader={run && sortOrder === SortOrder.Desc}
+            disabled={run}
           />
           <Button 
             onClick={handleNew}
             style={{marginLeft:"68px"}}
             text={"Новый массив"}
             linkedList='medium'
+            disabled={run}
           />
         </div>
       </div>
@@ -125,6 +140,60 @@ interface ISorter {
   getResult: () => IArrayItem[];
   isDone: () => boolean;
   next: () => void;
+}
+
+class SelectionSorter implements ISorter {
+  left: number;
+  right: number;
+  items: number[];
+  order: Order;
+  min: number;
+
+  constructor(items: number[], order: Order) {
+    this.items = items;
+    this.left = -1;
+    this.right = -1;
+    this.order = order;
+    this.min = -1;
+  }
+
+  getResult() {
+    return this.items.map((value, index) => {
+      let state = ElementStates.Default;
+      if (index < this.left) {
+        state = ElementStates.Modified;
+      } 
+      if (index === this.left || index === this.right) {
+        state = ElementStates.Changing;
+      }
+      return {value, state}
+    });
+  }
+
+  isDone(): boolean {
+    return this.left >= this.items.length;
+  }  
+
+  next() {
+    if (this.right >= this.items.length - 1){
+      if (this.left < this.min) {
+        swap(this.items, this.left, this.min);
+      }
+      this.left++;
+      this.right = this.left;
+      this.min = this.left;
+      return;
+    }
+
+    if (this.left === -1) {
+      this.left = 0;
+      this.right = 0;
+      this.min = 0;
+    } else if (this.right < this.items.length - 1) {
+      this.right++;
+    } 
+    this.min = this.order(this.items[this.right], this.items[this.min]) ? this.min :  this.right;
+  }
 }
 
 class BubbleSorter implements ISorter {
