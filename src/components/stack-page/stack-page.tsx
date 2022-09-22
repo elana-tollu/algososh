@@ -1,11 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from './stack-page.module.css';
+import { StackVisual } from "./stack-visual";
 
 export const StackPage: React.FC = () => {
+  const [stack, setStack] = useState<Stack<string>>(new Stack<string>());
+  const [input, setInput] = useState<string>('');
+  const [items, setItems] = useState<string[]>([]);
+  const [changing, setChanging] = useState<boolean>(false);
+
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = changeEvent => {
+    setInput(changeEvent.target.value);
+  }
+
+  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+    stack.push(input);
+    setItems(stack.getResult());
+    setChanging(true);
+    setTimeout(() => setChanging(false), 500);
+    setInput('');
+  }
+  
+  const handleRemove: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+    setChanging(true);
+    setTimeout(() => {
+      stack.pop();
+      setItems(stack.getResult());
+      setChanging(false);
+    }, 500);
+    setInput('');
+  }
+
+  const handleReset: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+    const newStack = new Stack<string>();
+    setStack(newStack);
+    setItems(newStack.getResult());
+    setInput('');
+  }
+
   return (
     <SolutionLayout title="Стек">
       <div className={styles.settings}>
@@ -13,43 +48,63 @@ export const StackPage: React.FC = () => {
             <Input
               isLimitText={true}
               maxLength={4}
+              value={input}
+              onChange={handleChange}
             />
         </div>
 
         <div className={styles.buttons}>
           <Button 
             text={"Добавить"}
+            disabled={!input}
+            onClick={handleAdd}
           />
           <Button 
             text={"Удалить"}
+            disabled={stack.isEmpty()}
+            onClick={handleRemove}
           />
           <Button 
             style={{marginLeft:"68px"}}
             text={"Очистить"}
+            disabled={stack.isEmpty()}
+            onClick={handleReset}
           />
         </div>
           
       </div>
-
-      <div className={styles.visual}>
-      <Circle 
-        letter={"1"}
-        index={0}
-        />
-        <Circle 
-        letter={"2"}
-        index={1}
-        />
-        <Circle 
-        letter={"3"}
-        index={3}
-        />
-        <Circle 
-        letter={"4"}
-        head={"top"}
-        index={4}
-        />
-      </div>
+        
+      <StackVisual items={items} changing={changing}/>
+  
     </SolutionLayout>
   );
 };
+
+class Stack<Item> {
+  #items: Item[];
+
+  constructor() {
+    this.#items = [];
+  }
+
+  push(item: Item) {
+    this.#items.push(item);
+   }
+
+  pop(): Item {
+    const item = this.#items.pop();
+    if (item === undefined) {
+      throw 'Stack is empty!';
+    }
+
+    return item;
+  }
+
+  isEmpty(): boolean {
+    return this.#items.length === 0;
+  }
+
+  getResult(): Item[] {
+    return [...this.#items];
+  }
+}

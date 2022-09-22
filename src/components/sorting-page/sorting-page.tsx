@@ -74,7 +74,7 @@ export const SortingPage: React.FC = () => {
   return (
     <SolutionLayout title="Сортировка массива">
       <div className={styles.settings}>
-        <div>
+        <div className={styles.radioButtons}>
           <RadioInput 
             label={"Выбор"}
             checked={algorithm === Algorithm.SelectionSort}
