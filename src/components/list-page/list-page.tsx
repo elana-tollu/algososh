@@ -57,6 +57,15 @@ export const ListPage: React.FC = () => {
     doNext();
   }
 
+  const handleRemoveFromHead:  React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+    list.remove (0);
+    doNext();
+  }
+  const handleRemoveFromTail: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+    list.removeFromTail();
+    doNext();
+  }
+
   return (
     <SolutionLayout title="Связный список">
 
@@ -85,13 +94,15 @@ export const ListPage: React.FC = () => {
           />
           <Button 
             text={"Удалить из head"}
-            disabled={true}
+            disabled={false}
             linkedList={"small"}
+            onClick={handleRemoveFromHead}
           />
           <Button 
             text={"Удалить из tail"}
-            disabled={true}
+            disabled={false}
             linkedList={"small"}
+            onClick={handleRemoveFromTail}
           />
         </div>
 
@@ -176,6 +187,14 @@ class List<Item> {
     }
   }
 
+  removeFromTail(): void {
+    this.removing = {
+      destination: this.items.length - 1,
+      currentPosition: this.items.length - 1,
+      isRemoved: false
+    }
+  }
+
   next(): void {
     if (this.adding) {
       if ((this.adding.currentPosition < this.adding.destination) && (this.adding.currentPosition === this.items.length - 1)) {
@@ -246,6 +265,9 @@ class List<Item> {
           state: ElementStates.Default
         }
       } 
+      else if (this.removing.destination === this.items.length - 1) {
+        items[this.removing.destination].state = ElementStates.Changing;
+      }
       else {
         for (let i = 0; i <= this.removing.currentPosition; i++) {
           items[i].state = ElementStates.Changing;
