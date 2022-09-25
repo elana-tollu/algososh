@@ -10,14 +10,14 @@ export interface ISecondaryValue<Item> {
   }
 
 export interface IPrimaryValue<Item> { 
-    readonly item: Item;
-    readonly state: ElementStates;
+    item: Item|undefined;
+    state: ElementStates;
 }
 
 export interface ILinkedListState<Item> {
-    readonly items: IPrimaryValue<Item>[];
-    readonly adding?: ISecondaryValue<Item>;
-    readonly removing?: ISecondaryValue<Item>;
+    items: IPrimaryValue<Item>[];
+    adding?: ISecondaryValue<Item>;
+    removing?: ISecondaryValue<Item>;
 }
 
 interface IListVisualProps { 
