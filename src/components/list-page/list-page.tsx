@@ -5,12 +5,12 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 
 import styles from './list-page.module.css';
 import { ListVisual } from "./list-visual";
-import { ILinkedListState, List, randomLinkedList } from "./utils";
+import { ILinkedListState, LinkedList, randomLinkedList } from "./utils";
 
 
 
 export const ListPage: React.FC = () => {
-  const [list, setList] = useState<List<string>>(randomLinkedList());
+  const [list, setList] = useState<LinkedList<string>>(randomLinkedList());
   const [listState, setListState] = useState<ILinkedListState<string>>(list.getResult());
   const [valueInput, setValueInput] = useState<string>('');
   const [indexInput, setIndexInput] = useState<string>('');
@@ -36,31 +36,31 @@ export const ListPage: React.FC = () => {
   }
 
   const handleAdd: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
-    list.add(valueInput, parseInt(indexInput));
+    list.addByIndex(valueInput, parseInt(indexInput));
     doNext();
   }
 
   const handleAddToHead: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
-    list.add(valueInput, 0);
+    list.addByIndex(valueInput, 0);
     doNext();
   }
 
   const handleAddToTail: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
-    list.addToTail(valueInput);
+    list.append(valueInput);
     doNext();
   }
 
   const handleRemove:  React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
-    list.remove (parseInt(indexInput));
+    list.deleteByIndex (parseInt(indexInput));
     doNext();
   }
 
   const handleRemoveFromHead:  React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
-    list.remove (0);
+    list.deleteByIndex (0);
     doNext();
   }
   const handleRemoveFromTail: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
-    list.removeFromTail();
+    list.deleteTail();
     doNext();
   }
 
