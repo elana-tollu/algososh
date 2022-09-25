@@ -2,6 +2,7 @@ import React from 'react';
 import { ElementStates } from '../../types/element-states';
 import { Circle } from '../ui/circle/circle';
 import styles from './queue-page.module.css';
+import { findLastIndex, isDefined } from './utils';
 
 interface IQueueVisualProps { 
     readonly items: (string|undefined)[];
@@ -25,16 +26,3 @@ export const QueueVisual: React.FC<IQueueVisualProps> = (props) => {
     )
 };
 
-export function isDefined<Item> (item?: Item): boolean {
-    return !!item;
-}
-
-export function findLastIndex<Item> (items: Item[], predicate: (item: Item) => boolean): number {
-    let arr = [...items];
-    arr.reverse();
-    const index = arr.findIndex(predicate);
-    if (index === -1) {
-        return -1;
-    }
-    return arr.length - 1 - index;
-}

@@ -3,22 +3,9 @@ import { ElementStates } from '../../types/element-states';
 import { Circle } from '../ui/circle/circle';
 import { ArrowIcon } from '../ui/icons/arrow-icon';
 import styles from './list-page.module.css';
+import { ILinkedListState } from './utils';
 
-export interface ISecondaryValue<Item> { 
-    readonly item: Item;
-    readonly index: number;
-  }
 
-export interface IPrimaryValue<Item> { 
-    item: Item|undefined;
-    state: ElementStates;
-}
-
-export interface ILinkedListState<Item> {
-    items: IPrimaryValue<Item>[];
-    adding?: ISecondaryValue<Item>;
-    removing?: ISecondaryValue<Item>;
-}
 
 interface IListVisualProps { 
     listState: ILinkedListState<string>

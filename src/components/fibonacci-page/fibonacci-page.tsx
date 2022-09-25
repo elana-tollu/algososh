@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { updateDecorator } from "typescript";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button/button";
-import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from './fibonacci-page.module.css'
 import { FibonacciVisual } from "./fibonacci-visual";
+import { nextFibonacci } from "./utils";
 
 export const FibonacciPage: React.FC = () => {
   const [fibonacci, setFibonacci] = useState<number[]>([]); // начальное состояние функции и его обновление, возвращает массив чисел
@@ -39,6 +38,7 @@ export const FibonacciPage: React.FC = () => {
             isLimitText={true}
             max={19}
             onChange={handleChange}
+            value={'' + n}
           />
         </div>
         <Button 
@@ -59,14 +59,3 @@ export const FibonacciPage: React.FC = () => {
   );
 };
  
-
-function nextFibonacci (numbers: number[]): number[] { // добавляет "следующий" элемент последовательности
-  const n = numbers.length;
-  if (n < 1) {
-    return [...numbers, 0];
-  } if (n < 2) {
-    return [...numbers, 1];
-  } else {
-    return [...numbers, (numbers[n - 2] + numbers[n - 1])];
-  }
-};

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ElementStates } from '../../types/element-states';
 import { Button } from '../ui/button/button';
 import { Input } from '../ui/input/input';
 import { SolutionLayout } from '../ui/solution-layout/solution-layout';
-import { IStringItem, StringVisual } from './string-visual';
+import { StringVisual } from './string-visual';
 import styles from './string.module.css';
+import { IStringItem, Reverser } from './utils';
 
 export const StringComponent: React.FC = () => {
   const [input, setInput] = useState<string>('');
@@ -42,6 +42,7 @@ export const StringComponent: React.FC = () => {
             isLimitText={true}
             maxLength={11}
             onChange={handleChange}
+            value={input}
           />
         </div>
         <Button 
@@ -59,43 +60,3 @@ export const StringComponent: React.FC = () => {
   );
 };
 
-class Reverser<Item> {
-  result: {
-    letter: Item,
-    state: ElementStates
-  }[];
-
-  constructor(items: Item[]) {
-    this.result = items.map(letter => ({
-      letter,
-      state: ElementStates.Default
-    }));
-    if (items.length === 0) {
-      return;
-    }
-    this.result[0].state = ElementStates.Changing;
-    this.result[items.length - 1].state = ElementStates.Changing;
-  }
-
-  getResult() {
-    return [...this.result];
-  }
-
-  isDone() {
-    return this.result.every(el => el.state === ElementStates.Modified);
-  }
-
-  next() {
-    const leftChanging = this.result.findIndex( el => el.state === ElementStates.Changing);
-    const rightChanging = this.result.length - 1 - leftChanging;
-    const leftValue = this.result[leftChanging];
-    this.result[leftChanging] = this.result[rightChanging];
-    this.result[rightChanging] = leftValue;
-    this.result[leftChanging].state = ElementStates.Modified;
-    this.result[rightChanging].state = ElementStates.Modified;
-    if (leftChanging + 1 <= rightChanging - 1) {
-      this.result[leftChanging + 1].state = ElementStates.Changing;
-      this.result[rightChanging - 1].state = ElementStates.Changing;
-    }
-  }
-}

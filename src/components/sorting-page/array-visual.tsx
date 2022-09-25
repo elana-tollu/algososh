@@ -1,12 +1,8 @@
 import React from 'react';
-import { ElementStates } from '../../types/element-states';
 import { Column } from '../ui/column/column';
 import styles from './sorting-page.module.css';
+import { IArrayItem } from './utils';
 
-export interface IArrayItem {
-    value: number,
-    state: ElementStates
-}
 
 interface IArrayVisualProps { 
     readonly items: IArrayItem[];

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button/button";
-import { Circle } from "../ui/circle/circle";
 import { Input } from "../ui/input/input";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from './stack-page.module.css';
 import { StackVisual } from "./stack-visual";
+import { Stack } from "./utils";
 
 export const StackPage: React.FC = () => {
   const [stack, setStack] = useState<Stack<string>>(new Stack<string>());
@@ -79,32 +79,3 @@ export const StackPage: React.FC = () => {
     </SolutionLayout>
   );
 };
-
-class Stack<Item> {
-  #items: Item[];
-
-  constructor() {
-    this.#items = [];
-  }
-
-  push(item: Item) {
-    this.#items.push(item);
-   }
-
-  pop(): Item {
-    const item = this.#items.pop();
-    if (item === undefined) {
-      throw 'Stack is empty!';
-    }
-
-    return item;
-  }
-
-  isEmpty(): boolean {
-    return this.#items.length === 0;
-  }
-
-  getResult(): Item[] {
-    return [...this.#items];
-  }
-}

@@ -1,12 +1,8 @@
 import React from 'react';
-import { ElementStates } from '../../types/element-states';
 import { Circle } from '../ui/circle/circle';
 import styles from './string.module.css';
+import { IStringItem } from './utils';
 
-export interface IStringItem {
-    letter: string,
-    state: ElementStates
-}
 
 interface IStringVisualProps { 
     readonly items: IStringItem[];
