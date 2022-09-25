@@ -14,7 +14,7 @@ export const StackVisual: React.FC<IStackVisualProps> = (props) => {
         const isLastItem = index === arr.length - 1;
         const head = isLastItem ? 'top' : null;
         const state = (isLastItem && props.changing) ? ElementStates.Changing : ElementStates.Default;
-        return (<Circle letter={item} state={state} key={index} index={index} head={head} />)
+        return (<Circle letter={item} state={state} key={`${item}-${index}`} index={index} head={head} />)
     });
     return (
         <div className={styles.visual}>

@@ -5,15 +5,15 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 
 import styles from './list-page.module.css';
 import { ListVisual } from "./list-visual";
-import { ILinkedListState, LinkedList, randomLinkedList } from "./utils";
+import { randomLinkedList } from "./utils";
 
 
 
 export const ListPage: React.FC = () => {
-  const [list, setList] = useState<LinkedList<string>>(randomLinkedList());
-  const [listState, setListState] = useState<ILinkedListState<string>>(list.getResult());
-  const [valueInput, setValueInput] = useState<string>('');
-  const [indexInput, setIndexInput] = useState<string>('');
+  const [list] = useState(randomLinkedList());
+  const [listState, setListState] = useState(list.getResult());
+  const [valueInput, setValueInput] = useState('');
+  const [indexInput, setIndexInput] = useState('');
 
   const handleValueChange: React.ChangeEventHandler<HTMLInputElement> = changeEvent => {
     setValueInput(changeEvent.target.value);
@@ -35,31 +35,31 @@ export const ListPage: React.FC = () => {
     }, 500);
   }
 
-  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = () => {
     list.addByIndex(valueInput, parseInt(indexInput));
     doNext();
   }
 
-  const handleAddToHead: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleAddToHead: React.MouseEventHandler<HTMLButtonElement> = () => {
     list.addByIndex(valueInput, 0);
     doNext();
   }
 
-  const handleAddToTail: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleAddToTail: React.MouseEventHandler<HTMLButtonElement> = () => {
     list.append(valueInput);
     doNext();
   }
 
-  const handleRemove:  React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleRemove:  React.MouseEventHandler<HTMLButtonElement> = () => {
     list.deleteByIndex (parseInt(indexInput));
     doNext();
   }
 
-  const handleRemoveFromHead:  React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleRemoveFromHead:  React.MouseEventHandler<HTMLButtonElement> = () => {
     list.deleteByIndex (0);
     doNext();
   }
-  const handleRemoveFromTail: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleRemoveFromTail: React.MouseEventHandler<HTMLButtonElement> = () => {
     list.deleteTail();
     doNext();
   }

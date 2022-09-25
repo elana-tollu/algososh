@@ -9,7 +9,7 @@ interface IFibonacciVisualProps {
 export const FibonacciVisual: React.FC<IFibonacciVisualProps> = (props) => {
     const listOfCircles = props.items
       .map((item, index) => 
-      <Circle letter={'' + item} index={index} key={index}/>
+      <Circle letter={'' + item} index={index} key={`${item}-${index}`}/>
       );
     return (
         <div className={styles.visual}>

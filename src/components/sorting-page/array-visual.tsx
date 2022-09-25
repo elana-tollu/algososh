@@ -12,7 +12,7 @@ export const ArrayVisual: React.FC<IArrayVisualProps> = (props) => {
 
     const listOfColumns = props.items
       .map((item, index) => 
-      <Column index={item.value} state={item.state} key={index}/>
+      <Column index={item.value} state={item.state} key={`${item.value}-${index}`}/>
       );
     return (
         <div className={styles.visual}>

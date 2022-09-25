@@ -50,7 +50,7 @@ export const StringComponent: React.FC = () => {
           linkedList='small'
           onClick={handleClick}
           disabled={!input}
-          isLoader={run==true}
+          isLoader={run}
         />
       </div>
 

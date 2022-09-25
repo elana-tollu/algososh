@@ -17,7 +17,7 @@ export const QueueVisual: React.FC<IQueueVisualProps> = (props) => {
         const head = index === headIndex ? 'head' : null;  
         const tail = index === tailIndex ? 'tail' : null;
         const state = index === props.changing ? ElementStates.Changing : ElementStates.Default; 
-        return (<Circle letter={item} state={state} key={index} index={index} head={head} tail={tail}/>)
+        return (<Circle letter={item} state={state} key={`${item}-${index}`} index={index} head={head} tail={tail}/>)
     });
     return (
         <div className={styles.visual}>

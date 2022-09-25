@@ -17,7 +17,7 @@ export const QueuePage: React.FC = () => {
     setInput(changeEvent.target.value);
   }
 
-  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = () => {
     const index = queue.nextTailIndex();
     if (index === undefined) {
       return;
@@ -31,7 +31,7 @@ export const QueuePage: React.FC = () => {
     setInput('');
   }
   
-  const handleRemove: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleRemove: React.MouseEventHandler<HTMLButtonElement> = () => {
     const index = queue.headIndex();
     setChanging(index);
     setTimeout(() => setChanging(undefined), 1000);
@@ -42,7 +42,7 @@ export const QueuePage: React.FC = () => {
     setInput('');
   }
 
-  const handleReset: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleReset: React.MouseEventHandler<HTMLButtonElement> = () => {
     const newQueue: Queue<string> = new Queue(7);
     setQueue(newQueue);
     setItems(newQueue.getResult());

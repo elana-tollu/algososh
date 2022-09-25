@@ -189,7 +189,6 @@ export class LinkedList<Item> {
         } else {
           previousNode.linkTo(node?.nextNode);
         }
-        // this.items.splice(this.removing.destination, 1);
         this.length--;
         this.removing = undefined;
       }

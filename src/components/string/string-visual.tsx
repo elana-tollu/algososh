@@ -11,7 +11,7 @@ interface IStringVisualProps {
 export const StringVisual: React.FC<IStringVisualProps> = (props) => {
     const listOfCircles = props.items
       .map((item, index) => 
-      <Circle letter={item.letter} state={item.state} key={index}/>
+      <Circle letter={item.letter} state={item.state} key={`${item.letter}-${index}`}/>
       );
     return (
         <div className={styles.visual}>

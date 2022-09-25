@@ -16,7 +16,7 @@ export const StackPage: React.FC = () => {
     setInput(changeEvent.target.value);
   }
 
-  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleAdd: React.MouseEventHandler<HTMLButtonElement> = () => {
     stack.push(input);
     setItems(stack.getResult());
     setChanging(true);
@@ -24,7 +24,7 @@ export const StackPage: React.FC = () => {
     setInput('');
   }
   
-  const handleRemove: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleRemove: React.MouseEventHandler<HTMLButtonElement> = () => {
     setChanging(true);
     setTimeout(() => {
       stack.pop();
@@ -34,7 +34,7 @@ export const StackPage: React.FC = () => {
     setInput('');
   }
 
-  const handleReset: React.MouseEventHandler<HTMLButtonElement> = buttonEvent => {
+  const handleReset: React.MouseEventHandler<HTMLButtonElement> = () => {
     const newStack = new Stack<string>();
     setStack(newStack);
     setItems(newStack.getResult());

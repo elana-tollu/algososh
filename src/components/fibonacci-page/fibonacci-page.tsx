@@ -46,7 +46,7 @@ export const FibonacciPage: React.FC = () => {
           linkedList='small'
           onClick={handleClick}
           disabled={!n || n > 19}
-          isLoader={run==true}
+          isLoader={run}
         />
       </div>
 

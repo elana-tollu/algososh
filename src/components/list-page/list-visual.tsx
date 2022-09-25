@@ -19,16 +19,16 @@ export const ListVisual: React.FC<IListVisualProps> = (props) => {
             head = 'head';
         } 
         if (props.listState.adding?.index === index) {
-            head = <Circle isSmall={true} letter={props.listState.adding.item} state={ElementStates.Changing}/>
+            head = <Circle isSmall letter={props.listState.adding.item} state={ElementStates.Changing}/>
         }
         let tail;
         if (index === props.listState.items.length - 1) {
             tail = 'tail';
         } 
         if (props.listState.removing?.index === index) {
-            tail = <Circle isSmall={true} letter={props.listState.removing.item} state={ElementStates.Changing}/>
+            tail = <Circle isSmall letter={props.listState.removing.item} state={ElementStates.Changing}/>
         }
-        return (<Circle letter={item.item} state={item.state} key={index + '-circle'} index={index} head={head} tail={tail}/>)
+        return (<Circle letter={item.item} state={item.state} key={`${item.item}-${index}-circle`} index={index} head={head} tail={tail}/>)
     });
     const circlesCount = listOfCircles.length;
     for (let i = 1; i < circlesCount * 2 - 1; i = i + 2) {
