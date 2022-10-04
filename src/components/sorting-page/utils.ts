@@ -92,7 +92,7 @@ class SelectionSorter implements ISorter {
   }
 }
 
-export class BubbleSorter implements ISorter {
+class BubbleSorter implements ISorter {
   sortEnd: number;
   bubble: number;
   items: number[];
