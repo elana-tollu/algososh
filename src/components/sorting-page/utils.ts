@@ -51,7 +51,7 @@ class SelectionSorter implements ISorter {
     this.min = -1;
   }
 
-  getResult() {
+  getResult(): IArrayItem[] {
     return this.items.map((value, index) => {
       let state = ElementStates.Default;
       if (index < this.left) {
@@ -92,7 +92,7 @@ class SelectionSorter implements ISorter {
   }
 }
 
-class BubbleSorter implements ISorter {
+export class BubbleSorter implements ISorter {
   sortEnd: number;
   bubble: number;
   items: number[];
