@@ -20,7 +20,7 @@ describe('Button', () => {
       .toJSON();
 
     expect(tree).toMatchSnapshot();
-});
+  });
 
   test('disabled', () => {
     const tree = renderer
