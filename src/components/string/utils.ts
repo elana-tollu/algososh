@@ -10,8 +10,11 @@ export class Reverser<Item> {
       letter: Item,
       state: ElementStates
     }[];
+
+    step: number;
   
     constructor(items: Item[]) {
+      this.step = 0;
       this.result = items.map(letter => ({
         letter,
         state: ElementStates.Default
@@ -26,12 +29,17 @@ export class Reverser<Item> {
     getResult() {
       return [...this.result];
     }
+
+    getStep() {
+      return this.step;
+    }
   
     isDone() {
       return this.result.every(el => el.state === ElementStates.Modified);
     }
   
     next() {
+      this.step++;
       const leftChanging = this.result.findIndex( el => el.state === ElementStates.Changing);
       const rightChanging = this.result.length - 1 - leftChanging;
       const leftValue = this.result[leftChanging];
