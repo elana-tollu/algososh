@@ -33,4 +33,4 @@ describe('string', () => {
         cy.get('@items2').eq(1).should('have.text', 'B').should('have.data', 'cyState', 'modified')
         cy.get('@items2').eq(2).should('have.text', 'A').should('have.data', 'cyState', 'modified')
     })
-  })
+})
