@@ -14,10 +14,12 @@ export const StackVisual: React.FC<IStackVisualProps> = (props) => {
         const isLastItem = index === arr.length - 1;
         const head = isLastItem ? 'top' : null;
         const state = (isLastItem && props.changing) ? ElementStates.Changing : ElementStates.Default;
-        return (<Circle letter={item} state={state} key={`${item}-${index}`} index={index} head={head} />)
+        return (<Circle letter={item} state={state} key={`${item}-${index}-${state}`} index={index} head={head} />)
     });
     return (
-        <div className={styles.visual}>
+        <div 
+            className={styles.visual}
+            data-cy-changing={props.changing}>
             {listOfCircles}
         </div>
     )

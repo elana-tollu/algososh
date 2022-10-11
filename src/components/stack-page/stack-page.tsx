@@ -50,6 +50,7 @@ export const StackPage: React.FC = () => {
               maxLength={4}
               value={input}
               onChange={handleChange}
+              data-cy="item-to-add"
             />
         </div>
 
