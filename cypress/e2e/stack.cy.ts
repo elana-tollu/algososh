@@ -65,4 +65,26 @@ describe('stack', () => {
         cy.get('[data-cy=circle][data-cy-state=default]').should('have.length', 2)
         cy.get('[data-cy=circle][data-cy-state=changing]').should('not.exist')
     })
+
+    it('pop', () => {
+        cy.get('[data-cy="item-to-add"]').type('A')
+        cy.contains('Добавить').click()
+        cy.get('[data-cy="item-to-add"]').type('B')
+        cy.contains('Добавить').click()
+        cy.get('[data-cy=circle][data-cy-state=default]').should('have.length', 2)
+
+        cy.contains('Удалить').click()
+        cy.get('[data-cy=circle]').should('have.length', 1)
+    })
+
+    it('clean', () => {
+        cy.get('[data-cy="item-to-add"]').type('A')
+        cy.contains('Добавить').click()
+        cy.get('[data-cy="item-to-add"]').type('B')
+        cy.contains('Добавить').click()
+        cy.get('[data-cy=circle][data-cy-state=default]').should('have.length', 2)
+
+        cy.contains('Очистить').click()
+        cy.get('[data-cy=circle]').should('not.exist')
+    })
 })
