@@ -42,8 +42,53 @@ describe('queue', () => {
             .find('[data-cy="index"]')
             .should('have.text', '0')
 
+        cy.get('[data-cy-changing=false]').should('exist')   
         cy.get('@items0-1')
-        .should('have.data', 'cyState', 'default')
+            .should('have.data', 'cyState', 'default')
+
+
+        cy.get('[data-cy="item-to-add"]').type('B')
+        cy.contains('Добавить').click()
+        
+        cy.get('[data-cy="circle"]').as('items1')
+            .should('have.length', 7)
+        cy.get('@items1').eq(0).as('items1-1')
+        cy.get('@items1').eq(1).as('items1-2')
+
+        cy.get('@items1-1')
+            .should('have.data', 'cyState', 'default')
+        cy.get('@items1-1')
+            .find('[data-cy="main"]')
+            .should('have.text', 'A')
+        cy.get('@items1-1')
+            .find('[data-cy="head"]')
+            .should('have.text', 'head')
+        cy.get('@items1-1')
+            .find('[data-cy="tail"]')
+            .should('be.empty')
+        cy.get('@items1-1')
+            .find('[data-cy="index"]')
+            .should('have.text', '0')
+
+        cy.get('@items1-2')
+            .should('have.data', 'cyState', 'changing')
+
+        cy.get('[data-cy-enqueueing=false]').should('exist') 
+        cy.get('@items1-2')
+            .find('[data-cy="main"]')
+            .should('have.text', 'B')
+        cy.get('@items1-2')
+            .find('[data-cy="head"]')
+            .should('be.empty')
+        cy.get('@items1-2')
+            .find('[data-cy="tail"]')
+            .should('have.text', 'tail')
+        cy.get('@items1-2')
+            .find('[data-cy="index"]')
+            .should('have.text', '1')
+        
+        cy.get('@items1')
+            .should('have.data', 'cyState', 'default')
     })
 
 

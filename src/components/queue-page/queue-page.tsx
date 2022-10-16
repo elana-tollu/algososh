@@ -56,7 +56,9 @@ export const QueuePage: React.FC = () => {
     <SolutionLayout title="Очередь">
       <div 
         className={styles.settings}
-        data-cy-enqueueing={enqueueing}>
+        data-cy-enqueueing={enqueueing}
+        data-cy-changing={!!changing}
+        >
         <div className={styles.inputField}>
             <Input
               isLimitText={true}
