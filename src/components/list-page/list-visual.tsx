@@ -36,7 +36,7 @@ export const ListVisual: React.FC<IListVisualProps> = (props) => {
         listOfCircles.splice(i, 0, (<ArrowIcon key={i + '-arrow'} fill="#0032FF"/>));
     }
     return (
-        <div className={styles.visual} data-cy-state={listState(props.listState)}>
+        <div className={styles.visual} data-cy-state={listState(props.listState)} data-test-id="list">
             {listOfCircles}
         </div>
     )

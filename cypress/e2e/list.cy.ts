@@ -67,4 +67,33 @@ describe('list', () => {
         cy.get(`[data-cy-state=${ListState.DEFAULT}]`).should('exist')        
     })
 
+    it('add to tail', () => {
+        cy.get('[data-cy="item-to-add"]').type('A')
+        cy.contains('Добавить в tail').click()
+
+        cy.get(`[data-cy-state=${ListState.ADDING}]`).should('exist')
+        cy
+            .get('[data-test-id=list]')
+            .children()
+            .filter('[data-cy="circle"]').last().as('item2')
+        cy.get('@item2')
+            .find('[data-cy=head]')
+            .find('[data-cy=circle]')
+            .should('have.text', 'A')
+            .should('have.data', 'cyState', 'changing')
+
+        cy.get(`[data-cy-state=${ListState.JUST_ADDED}]`).should('exist')
+        cy.get('[data-cy="circle"]').last().as('itemL')
+        cy.get('@itemL')
+            .should('have.data', 'cyState', 'modified')
+        cy.get('@itemL')
+            .find('[data-cy="tail"]')
+            .should('have.text', 'tail')
+        cy.get('@itemL')
+            .find('[data-cy="main"]')
+            .should('have.text', 'A')
+            
+        cy.get(`[data-cy-state=${ListState.DEFAULT}]`).should('exist')        
+    })
+
 })
