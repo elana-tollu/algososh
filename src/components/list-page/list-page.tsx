@@ -32,7 +32,7 @@ export const ListPage: React.FC = () => {
       }
       list.next();
       doNext();
-    }, 2000);
+    }, 500);
   }
 
   const handleAdd: React.MouseEventHandler<HTMLButtonElement> = () => {
