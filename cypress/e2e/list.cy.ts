@@ -117,4 +117,34 @@ describe('list', () => {
         cy.get(`[data-cy-state=${ListState.DEFAULT}]`).should('exist')        
     })
 
+    it('remove from tail', () => {
+        cy.contains('Удалить из tail').click()
+
+        cy.get(`[data-cy-state=${ListState.REMOVING}]`).should('exist')
+        cy.get('[data-test-id=list]')
+            .children()
+            .filter('[data-cy="circle"]').last().as('item2')
+        cy.get('@item2')
+            .should('have.data', 'cyState', 'changing')        
+
+        cy.get(`[data-cy-state=${ListState.JUST_REMOVED}]`).should('exist')
+        cy.get('[data-test-id=list]')
+            .children()
+            .filter('[data-cy="circle"]').last().as('item2')
+        cy.get('@item2')
+            .should('have.data', 'cyState', 'default')
+        cy.get('@item2')
+            .find('[data-cy="main"]').should('be.empty')
+        
+        cy.get('[data-test-id=list]')
+            .children()
+            .filter('[data-cy="circle"]').last().as('item0')
+        cy.get('@item0')
+            .find('[data-cy="tail"]')
+            .find('[data-cy=circle]')
+            .should('have.data', 'cyState', 'changing')
+            
+        cy.get(`[data-cy-state=${ListState.DEFAULT}]`).should('exist')        
+    })
+
 })
