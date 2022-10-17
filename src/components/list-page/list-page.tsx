@@ -76,6 +76,7 @@ export const ListPage: React.FC = () => {
                 maxLength={4}
                 value={valueInput}
                 onChange={handleValueChange}
+                data-cy="item-to-add"
               />
           </div>
           <Button 
@@ -111,6 +112,7 @@ export const ListPage: React.FC = () => {
                 type="number"
                 value={indexInput}
                 onChange={handleIndexChange}
+                data-cy="index-to-add"
               />
           </div>
           <Button 

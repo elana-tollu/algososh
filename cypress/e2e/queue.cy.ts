@@ -90,6 +90,7 @@ describe('queue', () => {
         cy.get('@items1')
             .should('have.data', 'cyState', 'default')
     })
+    
 
     it('dequeue', () => {
         cy.get('[data-cy="item-to-add"]').type('A')
