@@ -257,3 +257,27 @@ export function randomLinkedList(): LinkedList<string> {
 
   return new LinkedList(arr);
 }
+
+export enum ListState {
+  DEFAULT,
+  ADDING,
+  JUST_ADDED,
+  REMOVING,
+  JUST_REMOVED
+}
+
+export function listState(list: ILinkedListState<string>): ListState {
+  if (list.adding) {
+      return ListState.ADDING;
+  }
+  if (list.removing) {
+      return ListState.JUST_REMOVED;
+  }
+  if (list.items.some(item => item.state === ElementStates.Modified)) {
+      return ListState.JUST_ADDED;
+  }
+  if (list.items.some(item => item.state === ElementStates.Changing)) {
+      return ListState.REMOVING;
+  }
+  return ListState.DEFAULT;
+}
