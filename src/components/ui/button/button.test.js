@@ -16,7 +16,7 @@ describe('Button', () => {
 
   test('without text', () => {
     const tree = renderer
-      .create(<Button  sorting={Direction.Ascending}/>)
+      .create(<Button />)
       .toJSON();
 
     expect(tree).toMatchSnapshot();
