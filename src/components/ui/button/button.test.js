@@ -6,7 +6,7 @@ import { Direction } from '../../../types/direction';
 import { Button } from './button';
 
 describe('Button', () => { 
-  test('with text', () => {
+  test('should render with text', () => {
       const tree = renderer
         .create(<Button  text="Надпись на кнопке"/>)
         .toJSON();
@@ -14,7 +14,7 @@ describe('Button', () => {
       expect(tree).toMatchSnapshot();
   });
 
-  test('without text', () => {
+  test('should render without text', () => {
     const tree = renderer
       .create(<Button />)
       .toJSON();
@@ -22,7 +22,23 @@ describe('Button', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('disabled', () => {
+  test('should render sorting ascending', () => {
+    const tree = renderer
+      .create(<Button sorting={Direction.Ascending}/>)
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('should render sorting descending', () => {
+    const tree = renderer
+      .create(<Button sorting={Direction.Descending}/>)
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  test('should be disabled', () => {
     const tree = renderer
       .create(<Button  
         text="Надпись на кнопке" 
@@ -33,7 +49,7 @@ describe('Button', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('loading', () => {
+  test('should show loader', () => {
     const tree = renderer
       .create(<Button  
         text="Надпись на кнопке" 
@@ -44,7 +60,7 @@ describe('Button', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  test('click', () => {
+  test('should handle click', () => {
     const handleClick = jest.fn();
     render(<Button  
       text="Нажми меня" 
