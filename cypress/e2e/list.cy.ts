@@ -1,4 +1,5 @@
 import { ceil } from 'cypress/types/lodash';
+import { act } from 'react-dom/test-utils';
 import {ListState} from '../../src/components/list-page/utils';
 
 describe('list', () => {
@@ -146,5 +147,43 @@ describe('list', () => {
             
         cy.get(`[data-cy-state=${ListState.DEFAULT}]`).should('exist')        
     })
+
+    it('add by index', () => {
+        cy.get('[data-test-id=list]')
+            .children()
+            .filter('[data-cy="circle"]')
+            .find('[data-cy="main"]')
+            .then(circles => {
+                const expectedItems = circles
+                    .map((index, circle) => Cypress.$(circle).text())
+                    .toArray()
+                expectedItems.splice(1, 0, 'A')
+
+                cy.get('[data-cy="item-to-add"]').type('A')
+                cy.get('[data-cy="index-to-add"]').type('1')
+                cy.contains('Добавить по индексу').click()
+        
+                cy.get(`[data-cy-state=${ListState.ADDING}]`).should('exist')        
+        
+                cy.get(`[data-cy-state=${ListState.JUST_ADDED}]`).should('exist')
+        
+                cy.get(`[data-cy-state=${ListState.DEFAULT}]`).should('exist')     
+        
+                cy.get('[data-test-id=list]')
+                    .children()
+                    .filter('[data-cy="circle"]')
+                    .find('[data-cy="main"]')
+                    .then(circles => circles
+                        .map((index, circle) => Cypress.$(circle).text())
+                        .toArray()
+                    )
+                    .as('actualItems')
+                    
+                cy.get('@actualItems').then(actualItems => {
+                    expect(actualItems).to.deep.eq(expectedItems)
+                })
+            })
+    })
+
 
 })
