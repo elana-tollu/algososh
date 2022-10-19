@@ -1,5 +1,3 @@
-import { ceil } from 'cypress/types/lodash';
-import { act } from 'react-dom/test-utils';
 import {ListState} from '../../src/components/list-page/utils';
 
 describe('list', () => {
