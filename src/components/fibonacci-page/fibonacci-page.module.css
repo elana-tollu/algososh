@@ -1,0 +1,23 @@
+.input {
+    margin: 0 auto;
+    width: 568px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.inputField {
+    width: 376px;
+}
+
+.visual{
+    margin: 48px auto 100px;
+    max-width: 944px;
+    min-height: 110px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0;
+    gap: 80px 16px;
+}

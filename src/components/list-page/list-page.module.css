@@ -1,0 +1,35 @@
+.settings {
+    margin: 0 auto;
+    padding: 0;
+    width: 952px;
+    height: 158px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 38px;
+}
+
+.inputField {
+    width: 204px;
+    align-self: baseline;
+}
+
+.buttons {
+    padding: 0;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.visual{
+    margin: 88px auto;
+    height: 140px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    gap: 16px;
+}
