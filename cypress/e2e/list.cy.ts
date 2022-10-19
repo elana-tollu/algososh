@@ -185,5 +185,41 @@ describe('list', () => {
             })
     })
 
+    it('remove by index', () => {
+        cy.get('[data-test-id=list]')
+            .children()
+            .filter('[data-cy="circle"]')
+            .find('[data-cy="main"]')
+            .then(circles => {
+                const expectedItems = circles
+                    .map((index, circle) => Cypress.$(circle).text())
+                    .toArray()
+                expectedItems.splice(1, 1)
+
+                cy.get('[data-cy="index-to-add"]').type('1')
+                cy.contains('Удалить по индексу').click()
+        
+                cy.get(`[data-cy-state=${ListState.REMOVING}]`).should('exist')        
+        
+                cy.get(`[data-cy-state=${ListState.JUST_REMOVED}]`).should('exist')
+        
+                cy.get(`[data-cy-state=${ListState.DEFAULT}]`).should('exist')     
+        
+                cy.get('[data-test-id=list]')
+                    .children()
+                    .filter('[data-cy="circle"]')
+                    .find('[data-cy="main"]')
+                    .then(circles => circles
+                        .map((index, circle) => Cypress.$(circle).text())
+                        .toArray()
+                    )
+                    .as('actualItems')
+                    
+                cy.get('@actualItems').then(actualItems => {
+                    expect(actualItems).to.deep.eq(expectedItems)
+                })
+            })
+    })
+
 
 })
