@@ -3,13 +3,14 @@ import { ElementStates } from '../../types/element-states';
 import { Circle } from '../ui/circle/circle';
 import { ArrowIcon } from '../ui/icons/arrow-icon';
 import styles from './list-page.module.css';
-import { ILinkedListState } from './utils';
+import { ILinkedListState, listState } from './utils';
 
 
 
 interface IListVisualProps { 
     listState: ILinkedListState<string>
 }
+
 
 export const ListVisual: React.FC<IListVisualProps> = (props) => {
     const listOfCircles = props.listState.items
@@ -35,7 +36,7 @@ export const ListVisual: React.FC<IListVisualProps> = (props) => {
         listOfCircles.splice(i, 0, (<ArrowIcon key={i + '-arrow'} fill="#0032FF"/>));
     }
     return (
-        <div className={styles.visual}>
+        <div className={styles.visual} data-cy-state={listState(props.listState)} data-test-id="list">
             {listOfCircles}
         </div>
     )

@@ -51,7 +51,7 @@ class SelectionSorter implements ISorter {
     this.min = -1;
   }
 
-  getResult() {
+  getResult(): IArrayItem[] {
     return this.items.map((value, index) => {
       let state = ElementStates.Default;
       if (index < this.left) {

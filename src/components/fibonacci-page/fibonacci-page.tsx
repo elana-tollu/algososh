@@ -10,7 +10,7 @@ export const FibonacciPage: React.FC = () => {
   const [fibonacci, setFibonacci] = useState<number[]>([]); // начальное состояние функции и его обновление, возвращает массив чисел
   const [n, setN] = useState<number>(0); // 
   const [run, setRun] = useState<boolean>(false);  // начальное состояние кнопки и функция его обновления
- 
+
   useEffect(() => {
     if (run && fibonacci.length < n) {
       setTimeout(() => setFibonacci(nextFibonacci), 500); // F, обновляющей состояние Фибоначчи, в качестве аргумента передается F с расчетом следующего члена последовательности Ф, вторым аргументом время задержки перед выполнением
@@ -39,6 +39,7 @@ export const FibonacciPage: React.FC = () => {
             max={19}
             onChange={handleChange}
             value={'' + n}
+            data-cy="fibonacci-to-run"
           />
         </div>
         <Button 
@@ -50,7 +51,7 @@ export const FibonacciPage: React.FC = () => {
         />
       </div>
 
-      <div /*className={styles.visual}*/>
+      <div data-step={fibonacci.length}>
        <FibonacciVisual items={fibonacci}/>
 
       </div>

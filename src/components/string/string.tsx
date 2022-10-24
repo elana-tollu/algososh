@@ -43,6 +43,7 @@ export const StringComponent: React.FC = () => {
             maxLength={11}
             onChange={handleChange}
             value={input}
+            data-cy="string-to-reverse"
           />
         </div>
         <Button 
@@ -54,7 +55,7 @@ export const StringComponent: React.FC = () => {
         />
       </div>
 
-      <StringVisual items={result}/>
+      <StringVisual items={result} step={reverser.getStep()}/>
      
     </SolutionLayout>
   );

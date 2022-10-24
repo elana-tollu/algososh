@@ -12,6 +12,7 @@ export const QueuePage: React.FC = () => {
   
   const [queue, setQueue] = useState<Queue<string>>(new Queue(7));
   const [changing, setChanging] = useState<number|undefined>(undefined);
+  const [enqueueing, setEnqueueing] = useState<boolean>(false);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = changeEvent => {
     setInput(changeEvent.target.value);
@@ -23,10 +24,12 @@ export const QueuePage: React.FC = () => {
       return;
     }
     setChanging(index);
+    setEnqueueing(true);
     setTimeout(() => setChanging(undefined), 1000);
     setTimeout(() => {
       queue.enqueue(input);
       setItems(queue.getResult());
+      setEnqueueing(false);
     }, 500);
     setInput('');
   }
@@ -51,13 +54,18 @@ export const QueuePage: React.FC = () => {
 
   return (
     <SolutionLayout title="Очередь">
-      <div className={styles.settings}>
+      <div 
+        className={styles.settings}
+        data-cy-enqueueing={enqueueing}
+        data-cy-changing={!!changing}
+        >
         <div className={styles.inputField}>
             <Input
               isLimitText={true}
               maxLength={4}
               value={input}
               onChange={handleChange}
+              data-cy="item-to-add"
             />
         </div>
 
